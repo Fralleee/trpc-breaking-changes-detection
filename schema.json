@@ -31,9 +31,6 @@
                       "content": {
                         "type": "string"
                       },
-                      "dateAdded": {
-                        "type": "string"
-                      },
                       "done": {
                         "type": "boolean"
                       }
@@ -41,7 +38,6 @@
                     "required": [
                       "id",
                       "content",
-                      "dateAdded",
                       "done"
                     ],
                     "additionalProperties": false
