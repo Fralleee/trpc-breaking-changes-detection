@@ -31,6 +31,9 @@
                       "content": {
                         "type": "string"
                       },
+                      "note": {
+                        "type": "string"
+                      },
                       "done": {
                         "type": "boolean"
                       }
@@ -63,6 +66,9 @@
                 "type": "object",
                 "properties": {
                   "content": {
+                    "type": "string"
+                  },
+                  "note": {
                     "type": "string"
                   }
                 },

@@ -13,7 +13,7 @@ export const todoRouter = router({
       },
     })
     .input(z.void())
-    .output(z.array(z.object({ id: z.number(), content: z.string(), done: z.boolean() })))
+    .output(z.array(z.object({ id: z.number(), content: z.string(), note: z.string().optional(), done: z.boolean() })))
     .query(() => {
       return todos;
     }),
@@ -24,12 +24,13 @@ export const todoRouter = router({
         path: "/todo.addTodo",
       },
     })
-    .input(z.object({ content: z.string() }))
+    .input(z.object({ content: z.string(), note: z.string().optional() }))
     .output(z.boolean())
     .mutation(({ input }) => {
       todos.push({
         id: todos.length + 1,
         content: input.content,
+        note: input.note,
         done: false,
       });
       return true;
