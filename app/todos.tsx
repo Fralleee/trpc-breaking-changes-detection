@@ -42,7 +42,7 @@ export default function Todos({ initialData }: { initialData: Awaited<ReturnType
           className="bg-orange-600 font-bold py-2 px-4 rounded-sm text-slate-100"
           onClick={() => {
             if (content.length) {
-              addTodo.mutate(content);
+              addTodo.mutate({ content });
 
               setContent("");
             }

@@ -1,0 +1,28 @@
+name: OpenAPI Diff
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+
+jobs:
+  openapi-diff:
+    if: "!github.event.pull_request.draft"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out head branch
+        uses: actions/checkout@v4
+        with:
+          path: head
+      - name: Check out master branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: base
+      - name: Run OpenAPI Diff (from HEAD rev)
+        uses: docker://openapitools/openapi-diff:latest
+        with:
+          args: --fail-on-incompatible base/schema.json head/schema.json

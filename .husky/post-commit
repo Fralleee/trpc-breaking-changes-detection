@@ -1,0 +1,6 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+if git diff --name-only --cached | grep 'schema.json'; then
+  git commit --amend --no-edit
+fi
