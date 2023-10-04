@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# TRPC Breaking Changes Detection
+
+## Introduction
+
+This repository showcases an innovative approach to ensure API integrity between a Next.js server using tRPC and its corresponding clients. By auto-generating OpenAPI schemas based on the tRPC server, and then diffing these with previous versions, we can automatically detect and notify developers of breaking changes in the API.
+
+## Motivation
+
+In dynamic development environments, APIs often undergo changes. While some of these changes are benign, others can break client-server communication, especially in mobile applications. Promptly identifying such changes can save time, prevent bugs, and ensure a seamless user experience.
+
+## Features
+
+- **Next.js with tRPC Integration:** A foundational setup showcasing how tRPC can be used with Next.js.
+- **OpenAPI Auto-Generation:** Automatically generate an OpenAPI schema based on the current tRPC setup. This schema acts as the source of truth for the API's current state.
+- **Diffing Mechanism with `openapi-diff`:** By comparing the newly generated OpenAPI schema with a baseline (e.g., from the main branch), the system can detect and report changes in the API.
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the Repository**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   \```bash
+   git clone https://github.com/Fralleee/trpc-breaking-changes-detection.git
+   \```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install Dependencies**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   Navigate to the project directory and install the necessary dependencies:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   \```bash
+   cd trpc-breaking-changes-detection
+   pnpm install
+   \```
 
-## Learn More
+3. **Run the Next.js Server**
 
-To learn more about Next.js, take a look at the following resources:
+   \```bash
+   pnpm run dev
+   \```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Generate OpenAPI Schema**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   Instructions on how to generate the schema based on your current tRPC setup.
 
-## Deploy on Vercel
+   \```bash
+   pnpm run generate-schema
+   \```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. **Check for Breaking Changes**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   Start by creating a new branch and introducing either breaking or non-breaking modifications to the tRPC server. The automated action is configured to activate upon the creation of new pull requests, provided they are not set to draft status.
+
+## Contributing
+
+Feel free to raise issues or submit pull requests. Any contributions, big or small, are highly appreciated!
