@@ -18,32 +18,32 @@ In dynamic development environments, APIs often undergo changes. While some of t
 
 1. **Clone the Repository**
 
-   \```bash
+   ```bash
    git clone https://github.com/Fralleee/trpc-breaking-changes-detection.git
-   \```
+   ```
 
 2. **Install Dependencies**
 
    Navigate to the project directory and install the necessary dependencies:
 
-   \```bash
+   ```bash
    cd trpc-breaking-changes-detection
    pnpm install
-   \```
+   ```
 
 3. **Run the Next.js Server**
 
-   \```bash
+   ```bash
    pnpm run dev
-   \```
+   ```
 
 4. **Generate OpenAPI Schema**
 
    Instructions on how to generate the schema based on your current tRPC setup.
 
-   \```bash
+   ```bash
    pnpm run generate-schema
-   \```
+   ```
 
 5. **Check for Breaking Changes**
 
