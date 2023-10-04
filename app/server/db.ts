@@ -1,6 +1,7 @@
 type Todo = {
   id: number;
   content: string;
+  note?: string;
   done: boolean;
 };
 
