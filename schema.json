@@ -31,6 +31,9 @@
                       "content": {
                         "type": "string"
                       },
+                      "user": {
+                        "type": "string"
+                      },
                       "done": {
                         "type": "boolean"
                       }
@@ -38,6 +41,7 @@
                     "required": [
                       "id",
                       "content",
+                      "user",
                       "done"
                     ],
                     "additionalProperties": false
@@ -64,10 +68,14 @@
                 "properties": {
                   "content": {
                     "type": "string"
+                  },
+                  "user": {
+                    "type": "string"
                   }
                 },
                 "required": [
-                  "content"
+                  "content",
+                  "user"
                 ],
                 "additionalProperties": false
               }
