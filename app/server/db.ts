@@ -1,6 +1,6 @@
 type Todo = {
   id: number;
-  content: string;
+  description: string;
   dateAdded: string;
   done: boolean;
 };
@@ -8,13 +8,13 @@ type Todo = {
 export const todos: Todo[] = [
   {
     id: 1,
-    content: "Buy milk",
+    description: "Buy milk",
     dateAdded: new Date().toDateString(),
     done: false,
   },
   {
     id: 2,
-    content: "Wash the dishes",
+    description: "Wash the dishes",
     dateAdded: new Date().toDateString(),
     done: true,
   },

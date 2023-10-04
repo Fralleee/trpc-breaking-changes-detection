@@ -13,7 +13,7 @@ export const todoRouter = router({
       },
     })
     .input(z.void())
-    .output(z.array(z.object({ id: z.number(), content: z.string(), dateAdded: z.string(), done: z.boolean() })))
+    .output(z.array(z.object({ id: z.number(), description: z.string(), dateAdded: z.string(), done: z.boolean() })))
     .query(() => {
       return todos;
     }),
@@ -29,7 +29,7 @@ export const todoRouter = router({
     .mutation(({ input }) => {
       todos.push({
         id: todos.length + 1,
-        content: input.content,
+        description: input.content,
         dateAdded: new Date().toDateString(),
         done: false,
       });

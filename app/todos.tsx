@@ -25,7 +25,7 @@ export default function Todos({ initialData }: { initialData: Awaited<ReturnType
           <li className="flex gap-3 items-center" key={todo.id}>
             <input name="done" checked={todo.done} onChange={e => setDone.mutate({ id: todo.id, done: e.target.checked })} type="checkbox" />
             <label htmlFor="done" className={`${todo.done ? "line-through text-slate-500" : ""}`}>
-              {todo.content}
+              {todo.description}
             </label>
           </li>
         ))}
