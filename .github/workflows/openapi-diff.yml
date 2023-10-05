@@ -1,4 +1,4 @@
-name: OpenAPI Diff
+name: API Breaking Changes Check
 
 on:
   pull_request:
@@ -9,20 +9,57 @@ on:
       - ready_for_review
 
 jobs:
-  openapi-diff:
+  generate-schema:
     if: "!github.event.pull_request.draft"
     runs-on: ubuntu-latest
     steps:
-      - name: Check out head branch
+      - name: 📥 Check out head branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: 🛠️ Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.7"
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: 📦 Install dependencies for @nira/dsa-web
+        run: pnpm install --filter @nira/dsa-web
+
+      - name: ✍️ Generate Schema
+        run: npm run generate-schema --prefix apps/web
+
+      - name: 🚀 Commit generated schema
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add apps/web/schema.json
+          git commit -m "chore: generated schema [no ci]" || echo "No changes to commit"
+          git push
+
+  schema-diff:
+    needs: generate-schema
+    if: "!github.event.pull_request.draft"
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Check out head branch
         uses: actions/checkout@v4
         with:
           path: head
-      - name: Check out master branch
+
+      - name: 📥 Check out master branch
         uses: actions/checkout@v4
         with:
           ref: main
           path: base
-      - name: Run OpenAPI Diff (from HEAD rev)
+
+      - name: ⚖️ Run OpenAPI Diff (from HEAD rev)
         uses: docker://openapitools/openapi-diff:latest
         with:
-          args: --fail-on-incompatible base/schema.json head/schema.json
+          args: --fail-on-incompatible base/apps/web/schema.json head/apps/web/schema.json
