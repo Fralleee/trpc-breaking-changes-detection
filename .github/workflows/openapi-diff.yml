@@ -12,6 +12,9 @@ jobs:
   generate-schema:
     if: "!github.event.pull_request.draft"
     runs-on: ubuntu-latest
+    outputs:
+      LATEST_SHA: ${{ env.LATEST_SHA }}
+      SCHEMA_CHANGED: ${{ env.SCHEMA_CHANGED }}
     steps:
       - name: 📥 Check out head branch
         uses: actions/checkout@v4
@@ -19,15 +22,16 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
 
-      - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20.7"
-
       - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
+
+      - name: 🛠️ Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.7"
+          cache: "pnpm"
 
       - name: 📦 Install dependencies for @nira/dsa-web
         run: pnpm install --filter @nira/dsa-web
@@ -40,17 +44,26 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add apps/web/schema.json
-          git commit -m "chore: generated schema [no ci]" || echo "No changes to commit"
+          if git commit -m "chore: generated schema [no ci]"; then
+            echo "SCHEMA_CHANGED=true" >> $GITHUB_ENV
+          else
+            echo "No changes to commit"
+          fi
           git push
+
+      # We need this to be able to access the latest SHA in the next job
+      - name: Capture last commit SHA
+        run: echo "LATEST_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
   schema-diff:
     needs: generate-schema
-    if: "!github.event.pull_request.draft"
+    if: "!github.event.pull_request.draft && needs.generate-schema.outputs.SCHEMA_CHANGED == 'true'"
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Check out head branch
+      - name: 📥 Check out head branch at latest SHA
         uses: actions/checkout@v4
         with:
+          ref: ${{ needs.generate-schema.outputs.LATEST_SHA }}
           path: head
 
       - name: 📥 Check out master branch
