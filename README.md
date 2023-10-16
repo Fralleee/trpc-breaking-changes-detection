@@ -1,5 +1,7 @@
 # TRPC Breaking Changes Detection
 
+https://medium.com/stackademic/harnessing-openapi-to-track-and-domesticate-wild-trpc-changes-050b24b33a76
+
 ## Introduction
 
 This repository showcases an innovative approach to ensure API integrity between a Next.js server using tRPC and its corresponding clients. By auto-generating OpenAPI schemas based on the tRPC server, and then diffing these with previous versions, we can automatically detect and notify developers of breaking changes in the API.
