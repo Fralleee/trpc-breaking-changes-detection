@@ -1,6 +1,6 @@
 # TRPC Breaking Changes Detection
 
-https://medium.com/stackademic/harnessing-openapi-to-track-and-domesticate-wild-trpc-changes-050b24b33a76
+This repository is mentioned in my [medium article](https://medium.com/stackademic/harnessing-openapi-to-track-and-domesticate-wild-trpc-changes-050b24b33a76).
 
 ## Introduction
 
